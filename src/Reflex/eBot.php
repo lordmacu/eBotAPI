@@ -10,9 +10,7 @@ class eBot
 	protected $sql_user;
 	protected $sql_pass;
 	protected $sql_db;
-
-	protected $db_instance;
-
+	
 	public function __construct($sql_host, $sql_user, $sql_pass, $sql_db)
 	{
 		$this->sql_host = $sql_host;
