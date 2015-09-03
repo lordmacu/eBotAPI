@@ -1,0 +1,21 @@
+{
+    "name": "team-reflex/ebot-api",
+    "description": "An API to interact with the CS:GO match manager, eBot",
+    "require": {
+        "php": "^5.4",
+        "illuminate/database": "5.1.*",
+        "illuminate/events": "5.1.*"
+    },
+    "authors": [
+        {
+            "name": "David Cole",
+            "email": "david.cole@doesplay.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Reflex\\": "src/Reflex"
+        }
+    }
+}
