@@ -19,12 +19,5 @@ class eBot
 		$this->sql_user = $sql_user;
 		$this->sql_pass = $sql_pass;
 		$this->sql_db = $sql_db;
-
-		$this->db_instance = new Database($sql_host, $sql_user, $sql_pass, $sql_db);
-	}
-
-	public function getMatches($limit = 15)
-	{
-		$this->db_instance->query("select * from matchs limit {$limit}");
 	}
 }
