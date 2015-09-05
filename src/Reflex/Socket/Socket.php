@@ -6,7 +6,7 @@ use Reflex\Helpers\Encryption;
 
 class Socket
 {
-	public static function send($command, $match, $ebotip, $ebotport = 12360, $extra)
+	public static function send($command, $match, $ebotip, $ebotport = 12360, $extra = '')
 	{
 		$data = "{$match->id} {$command} {$match->server->ip}";
 		if(!empty($extra)) $data = "{$data} {$extra}";
