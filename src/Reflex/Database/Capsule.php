@@ -15,6 +15,12 @@ class Capsule
 		$this->capsule = new Manager;
 	}
 
+	public function addAndBoot($host, $user, $pass, $db, $prefix = '')
+	{
+		$this->addConnection($host, $user, $pass, $db, $prefix);
+		$this->boot();
+	}
+
 	public function addConnection($host, $user, $pass, $db, $prefix = '')
 	{
 		$this->capsule->addConnection([
