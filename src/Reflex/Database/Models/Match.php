@@ -95,48 +95,66 @@ class Match extends Model
         $this->save();
     }
 
+    public function setRandomServer()
+    {
+        $servers = Server::all();
+        $matches = Match::whereBetween('status', [1, 13])->orderByRaw("RAND()")->lists('server_id');
+
+        foreach ($servers as $server) {
+            if ($matches->contains($server->id)) {
+                $this->server_id = $server->id;
+                $this->ip = $server->ip;
+                $this->save();
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function stopMatch($restart = true)
     {
-        return Socket::send(($restart ? 'stop' : 'stopNoRs'), $this, ''); // TODO Get eBot Server IP
+        return Socket::send(($restart ? 'stop' : 'stopNoRs'), $this); // TODO Get eBot Server IP
     }
 
     public function executeRcon($command)
     {
-        return Socket::send('executeCommand', $this, '', 12360, $command);
+        return Socket::send('executeCommand', $this, $command);
     }
 
     public function skipKnife()
     {
-        return Socket::send('passknife', $this, '');
+        return Socket::send('passknife', $this);
     }
 
     public function forceKnife()
     {
-        return Socket::send('forceknife', $this, '');
+        return Socket::send('forceknife', $this);
     }
 
     public function endKnife()
     {
-        return Socket::send('forceknifeend', $this, '');
+        return Socket::send('forceknifeend', $this);
     }
 
     public function forceStart()
     {
-        return Socket::send('forcestart', $this, '');
+        return Socket::send('forcestart', $this);
     }
 
     public function togglePause()
     {
-        return Socket::send('pauseunpause', $this, '');
+        return Socket::send('pauseunpause', $this);
     }
 
     public function fixTeamNames()
     {
-        return Socket::send('fixsides', $this, '');
+        return Socket::send('fixsides', $this);
     }
 
     public function toggleStreamerReady()
     {
-        return Socket::send('streamready', $this, '');
+        return Socket::send('streamready', $this);
     }
 }
