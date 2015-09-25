@@ -3,6 +3,7 @@
 namespace Reflex\Database\Models;
 
 use Reflex\Database\Model;
+use Reflex\Database\Models\Map;
 
 class MapScore extends Model
 {
@@ -21,7 +22,7 @@ class MapScore extends Model
 
 	public function map()
 	{
-		return $this->belongsTo('\Reflex\Database\Models\Map');
+		return $this->belongsTo(Map::class);
 	}
 
 	public function getTeamAScoreAttribute()

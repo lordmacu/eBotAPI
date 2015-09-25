@@ -3,6 +3,7 @@
 namespace Reflex\Database\Models;
 
 use Reflex\Database\Model;
+use Reflex\Database\Models\Match;
 
 class Server extends Model
 {
@@ -14,6 +15,6 @@ class Server extends Model
 
 	public function matches()
 	{
-		return $this->hasMany('\Reflex\Database\Models\Match');
+		return $this->hasMany(Match::class);
 	}
 }

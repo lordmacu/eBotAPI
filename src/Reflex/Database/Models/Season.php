@@ -3,6 +3,9 @@
 namespace Reflex\Database\Models;
 
 use Reflex\Database\Model;
+use Reflex\Database\Models\Advert;
+use Reflex\Database\Models\Match;
+use Reflex\Database\Models\Team;
 
 class Season extends Model
 {
@@ -18,16 +21,16 @@ class Season extends Model
 
 	public function matches()
 	{
-		return $this->hasMany('\Reflex\Database\Models\Match');
+		return $this->hasMany(Match::class);
 	}
 
 	public function teams()
 	{
-		return $this->belongsToMany('\Reflex\Database\Models\Team', 'teams_in_seasons');
+		return $this->belongsToMany(Team::class, 'teams_in_seasons');
 	}
 
 	public function adverts()
 	{
-		return $this->hasMany('\Reflex\Database\Models\Advert');
+		return $this->hasMany(Advert::class);
 	}
 }

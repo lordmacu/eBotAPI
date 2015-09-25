@@ -3,6 +3,10 @@
 namespace Reflex\Database\Models;
 
 use Reflex\Database\Model;
+use Reflex\Database\Models\Map;
+use Reflex\Database\Models\Season;
+use Reflex\Database\Models\Server;
+use Reflex\Database\Models\Team;
 use Reflex\Database\Traits\MatchStatusTrait;
 use Reflex\Socket\Socket;
 
@@ -51,37 +55,44 @@ class Match extends Model
 
     public function server()
     {
-        return $this->hasOne('\Reflex\Database\Models\Server', 'id', 'server_id');
+        return $this->hasOne(Server::class, 'id', 'server_id');
     }
 
     public function season()
     {
-        return $this->belongsTo('\Reflex\Database\Models\Season');
+        return $this->belongsTo(Season::class);
     }
 
     public function teamA()
     {
-        return $this->hasOne('\Reflex\Database\Models\Team', 'id', 'team_a');
+        return $this->hasOne(Team::class, 'id', 'team_a');
     }
 
     public function teamB()
     {
-        return $this->hasOne('\Reflex\Database\Models\Team', 'id', 'team_b');
+        return $this->hasOne(Team::class, 'id', 'team_b');
     }
 
     public function map()
     {
-        return $this->hasOne('\Reflex\Database\Models\Map', 'id', 'current_map');
+        return $this->hasOne(Map::class, 'id', 'current_map');
     }
 
     public function getConnectAttribute()
     {
-        return "connect {$this->server->ip};; password {$this->config_password}";
+        return "connect {$this->server->ip}" . (!empty($this->config_password) ? ";; password {$this->config_password}" : '');
     }
 
     public function getGotvConnectAttribute()
     {
         return "connect {$this->server->tv_ip}";
+    }
+
+    public function startMatch()
+    {
+        $this->status = self::STATUS_STARTING;
+        $this->enable = 1;
+        $this->save();
     }
 
     public function stopMatch($restart = true)

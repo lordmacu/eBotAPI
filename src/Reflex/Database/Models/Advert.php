@@ -3,6 +3,7 @@
 namespace Reflex\Database\Models;
 
 use Reflex\Database\Model;
+use Reflex\Database\Models\Season;
 
 class Advert extends Model
 {
@@ -14,6 +15,6 @@ class Advert extends Model
 
 	public function season()
 	{
-		return $this->belongsTo('\Reflex\Database\Models\Season');
+		return $this->belongsTo(Season::class);
 	}
 }

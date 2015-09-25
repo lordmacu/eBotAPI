@@ -3,6 +3,7 @@
 namespace Reflex\Database\Models;
 
 use Reflex\Database\Model;
+use Reflex\Database\Models\Season;
 
 class Team extends Model
 {
@@ -14,6 +15,6 @@ class Team extends Model
 
 	public function seasons()
 	{
-		return $this->belongsToMany('\Reflex\Database\Models\Season', 'teams_in_seasons');
+		return $this->belongsToMany(Season::class, 'teams_in_seasons');
 	}
 }

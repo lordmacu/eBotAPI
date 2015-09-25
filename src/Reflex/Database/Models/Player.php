@@ -3,6 +3,8 @@
 namespace Reflex\Database\Models;
 
 use Reflex\Database\Model;
+use Reflex\Database\Models\Map;
+use Reflex\Database\Models\Match;
 
 class Player extends Model
 {
@@ -21,12 +23,12 @@ class Player extends Model
 
 	public function match()
 	{
-		return $this->belongsTo('\Reflex\Database\Models\Match');
+		return $this->belongsTo(Match::class);
 	}
 
 	public function map()
 	{
-		return $this->belongsTo('\Reflex\Database\Models\Map');
+		return $this->belongsTo(Map::class);
 	}
 
 	public function getTeamAttribute()

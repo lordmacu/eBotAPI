@@ -3,6 +3,8 @@
 namespace Reflex\Database\Models;
 
 use Reflex\Database\Model;
+use Reflex\Database\Models\MapScore;
+use Reflex\Database\Models\Match;
 
 class Map extends Model
 {
@@ -15,11 +17,11 @@ class Map extends Model
 
 	public function match()
 	{
-		return $this->belongsTo('\Reflex\Database\Models\Match');
+		return $this->belongsTo(Match::class);
 	}
 
 	public function mapScores()
 	{
-		return $this->hasMany('\Reflex\Database\Models\MapScore');
+		return $this->hasMany(MapScore::class);
 	}
 }
