@@ -31,7 +31,7 @@ class Match extends Model
         'auto_start', 'auto_start_time'
     ];
 
-    protected $appends = ['connect', 'gotv_connect'];
+    protected $appends = ['running', 'connect', 'gotv_connect'];
 
     /**
      * Constants for Status
@@ -78,6 +78,11 @@ class Match extends Model
         return $this->hasOne(Map::class, 'id', 'current_map');
     }
 
+    public function getRunningAttribute()
+    {
+        return ($this->status > 1 && $this->status < 13);
+    }
+
     public function getConnectAttribute()
     {
         return "connect {$this->server->ip}" . (!empty($this->config_password) ? ";; password {$this->config_password}" : '');
@@ -93,6 +98,61 @@ class Match extends Model
         $this->status = self::STATUS_STARTING;
         $this->enable = 1;
         $this->save();
+    }
+
+    public function createFromPreset($team_a, $team_b, $season, $settings)
+    {
+        $team_a = ($team_a instanceof Team) ? $team_a->id : $team_a;
+        $team_b = ($team_b instanceof Team) ? $team_b->id : $team_b;
+
+        $this->ip = null;
+        $this->server_id = null;
+        $this->season_id = ($season instanceof Season) ? $season->id : $season;
+        $this->team_a = $team_a;
+        $this->team_b = $team_b;
+        $this->status = 0;
+        $this->max_round = $settings['max_round'];
+        $this->rules = $settings['ruleset'];
+        $this->overtime_startmoney = $settings['overtime']['start_money'];
+        $this->overtime_max_round = $settings['overtime']['max_rounds'];
+        $this->config_full_score = $settings['play_all_rounds'];
+        $this->config_ot = $settings['overtime']['enabled'];
+        $this->config_streamer = $settings['wait_for_streamer'];
+        $this->config_knife_round = $settings['knife_round'];
+
+        if ($settings['password']['random']) {
+            $this->config_password = str_random(15);
+        } else {
+            $this->config_password = $settings['password']['value'];
+        }
+
+        $this->map_selection_mode = $settings['map_selection_mode'];
+        $this->save();
+
+        $map = new Map;
+        $map->match_id = $this->id;
+        $map->map_name = $settings['map']['map_name'];
+        $map->score_1 = 0;
+        $map->score_2 = 0;
+        $map->current_side = 'ct';
+        $map->status = 0;
+        $map->maps_for = 'default';
+        $map->nb_ot = 0;
+        $map->save();
+
+        $this->current_map = $map->id;
+        $this->save();
+
+        $this->setAuthKey();
+
+        return $this;
+    }
+
+    public function setAuthKey()
+    {
+        if (!empty($this->config_authkey)) return false;
+        $this->config_authkey = uniqid(mt_rand(), true);
+        return true;
     }
 
     public function setRandomServer()
