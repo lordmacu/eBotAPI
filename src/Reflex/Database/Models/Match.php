@@ -181,8 +181,8 @@ class Match extends Model
 
     public function setRandomServer($exclude_servers = null)
     {
-        $servers = Server::all();
-        $matches = Match::whereBetween('status', [1, 13]    )->orderByRaw("RAND()")->lists('server_id');
+        $servers = Server::orderByRaw("RAND()")->get();
+        $matches = Match::whereBetween('status', [1, 13])->lists('server_id');
         $exclude_servers = collect($exclude_servers);
 
         foreach ($servers as $server) {
