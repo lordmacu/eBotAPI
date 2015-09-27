@@ -9,7 +9,7 @@ To get the API, you need to get [Composer](http://getcomposer.org). Once you hav
 Next, you need to add our service provider to your `config/app.php`. Add it in the `'providers'` section as the following:
 
 ```php
-$providers = [
+'providers' => [
 	// ...
 	Reflex\eBotServiceProvider::class
 ];
