@@ -210,7 +210,13 @@ class Match extends Model
 
     public function stopMatch($restart = true)
     {
-        return Socket::send(($restart ? 'stop' : 'stopNoRs'), $this); // TODO Get eBot Server IP
+        $s = Socket::send('stop', $this);
+        
+        if ($restart) {
+            $this->status = 0;
+            $this->enable = 0;
+            $this->save();
+        }
     }
 
     public function executeRcon($command)
