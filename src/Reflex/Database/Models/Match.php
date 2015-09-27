@@ -141,9 +141,8 @@ class Match extends Model
         $map->save();
 
         $this->current_map = $map->id;
-        $this->save();
-
         $this->setAuthKey();
+        $this->save();
 
         return $this;
     }
