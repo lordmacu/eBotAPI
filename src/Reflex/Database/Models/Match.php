@@ -185,7 +185,7 @@ class Match extends Model
             $servers = Server::where('id', '!=', $exclude_servers[0]->id);
 
             foreach ($exclude_servers as $server) {
-                $servers->where('id', '!=', $server->id);
+                $servers = $servers->where('id', '!=', $server->id);
             }
 
             $servers->get();
@@ -193,7 +193,7 @@ class Match extends Model
             $servers = Server::all();
         }
         
-        $matches = Match::whereBetween('status', [1, 13])->orderByRaw("RAND()")->lists('server_id');
+        $matches = Match::whereBetween('status', [1, 13]    )->orderByRaw("RAND()")->lists('server_id');
 
         foreach ($servers as $server) {
             if (!$matches->contains($server->id)) {
@@ -211,7 +211,7 @@ class Match extends Model
     public function stopMatch($restart = true)
     {
         $s = Socket::send('stop', $this);
-        
+
         if ($restart) {
             $this->status = 0;
             $this->enable = 0;
