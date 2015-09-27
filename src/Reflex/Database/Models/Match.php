@@ -100,6 +100,31 @@ class Match extends Model
         $this->save();
     }
 
+    public function restartMatch()
+    {
+        $this->stopMatch();
+        $this->resetMatch();
+        sleep(3);
+        $this->startMatch();
+    }
+
+    public function resetMatch()
+    {
+        $this->score_a = 0;
+        $this->score_b = 0;
+        $this->status = 0;
+        $this->enable = 0;
+        $this->ingame_enable = null;
+        $this->is_paused = null;
+        $this->save();
+
+        $this->map->score_1 = 0;
+        $this->map->score_2 = 0;
+        $this->map->nb_ot = 0;
+        $this->map->status = 0;
+        $this->map->save();
+    }
+
     public function createFromPreset($team_a, $team_b, $season, $settings)
     {
         $team_a = ($team_a instanceof Team) ? $team_a->id : $team_a;
@@ -154,18 +179,30 @@ class Match extends Model
         return true;
     }
 
-    public function setRandomServer()
+    public function setRandomServer($exclude_servers = null)
     {
-        $servers = Server::all();
+        if (!is_null($exclude_servers)) {
+            $servers = Server::where('id', '!=', $exclude_servers[0]->id);
+            $exclude_servers = array_forget($exclude_servers, 0);
+
+            foreach ($exclude_servers as $server) {
+                $servers->where('id', '!=', $server->id);
+            }
+
+            $servers->get();
+        } else {
+            $servers = Server::all();
+        }
+        
         $matches = Match::whereBetween('status', [1, 13])->orderByRaw("RAND()")->lists('server_id');
 
         foreach ($servers as $server) {
-            if ($matches->contains($server->id)) {
+            if (!$matches->contains($server->id)) {
                 $this->server_id = $server->id;
                 $this->ip = $server->ip;
                 $this->save();
 
-                return true;
+                return $server;
             }
         }
 
