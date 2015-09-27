@@ -18,4 +18,14 @@ class eBotServiceProvider extends ServiceProvider
 			__DIR__.'/../config/config.php' => config_path('ebot-reflex.php'),
 		]);
 	}
+
+	/**
+	 * Register the service provider.
+	 *
+	 * @return  void
+	 */
+	public function register()
+	{
+		
+	}
 }
