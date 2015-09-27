@@ -183,7 +183,6 @@ class Match extends Model
     {
         if (!is_null($exclude_servers)) {
             $servers = Server::where('id', '!=', $exclude_servers[0]->id);
-            $exclude_servers = array_forget($exclude_servers, 0);
 
             foreach ($exclude_servers as $server) {
                 $servers->where('id', '!=', $server->id);
