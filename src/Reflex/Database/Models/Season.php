@@ -26,7 +26,7 @@ class Season extends Model
 
 	public function teams()
 	{
-		return $this->belongsToMany(Team::class, 'teams_in_seasons');
+		return $this->belongsToMany(Team::class, 'teams_in_seasons', 'season_id', 'team_id');
 	}
 
 	public function adverts()
