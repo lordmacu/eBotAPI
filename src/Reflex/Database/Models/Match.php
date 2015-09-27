@@ -181,22 +181,16 @@ class Match extends Model
 
     public function setRandomServer($exclude_servers = null)
     {
-        if (!is_null($exclude_servers)) {
-            $servers = Server::where('id', '!=', $exclude_servers[0]->id);
-
-            foreach ($exclude_servers as $server) {
-                $servers = $servers->where('id', '!=', $server->id);
-            }
-
-            $servers->get();
-        } else {
-            $servers = Server::all();
-        }
-        
+        $servers = Server::all();
         $matches = Match::whereBetween('status', [1, 13]    )->orderByRaw("RAND()")->lists('server_id');
+        $exclude_servers = collect($exclude_servers);
 
         foreach ($servers as $server) {
             if (!$matches->contains($server->id)) {
+                if (!is_null($exclude_servers)) {
+                    if ($exclude_servers->contains($server->id)) continue;
+                }
+
                 $this->server_id = $server->id;
                 $this->ip = $server->ip;
                 $this->save();
