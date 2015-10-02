@@ -85,11 +85,13 @@ class Match extends Model
 
     public function getConnectAttribute()
     {
+        if (is_null($this->server)) return null;
         return "connect {$this->server->ip}" . (!empty($this->config_password) ? ";; password {$this->config_password}" : '');
     }
 
     public function getGotvConnectAttribute()
     {
+        if (is_null($this->server)) return null;
         return "connect {$this->server->tv_ip}";
     }
 
