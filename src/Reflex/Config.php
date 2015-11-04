@@ -7,12 +7,7 @@ use Reflex\Exceptions\IPNotSetException;
 
 class Config
 {
-	public function __construct($dir)
-	{
-		$this->loadEnv($dir);
-	}
-
-	public function loadEnv($dir, $file = '.env')
+	public static function loadEnv($dir, $file = '.env')
 	{
 		try {
 			$dotenv = new Dotenv($dir, $file);

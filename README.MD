@@ -12,11 +12,24 @@ We are assuming that you have already imported the Composer autoload file into y
 
 ### Setting up
 
-Firstly, you need to set up a capsule instance:
+Firstly, you need to set up your config.
 
 ```php
 <?php
 
+use Reflex\Config;
+
+$file_directory = __DIR__;
+$file_name = '.env';
+
+Config::loadEnv($file_directory, $file_name);
+```
+
+There is a config example available [here.](https://github.com/teamreflex/eBotAPI/blob/master/.env.example)
+
+Afterwards, you should set up your capsule.
+
+```php
 use Reflex\Database\Capsule;
 
 $capsule = new Capsule;
