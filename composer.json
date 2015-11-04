@@ -5,7 +5,8 @@
         "php": "^5.4",
         "illuminate/database": "5.1.*",
         "illuminate/events": "5.1.*",
-        "illuminate/support": "5.1.*"
+        "illuminate/support": "5.1.*",
+        "vlucas/phpdotenv": "^2.1@dev"
     },
     "authors": [
         {

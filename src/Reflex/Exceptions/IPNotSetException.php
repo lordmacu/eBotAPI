@@ -2,5 +2,5 @@
 
 namespace Reflex\Exceptions;
 
-class IPNotSetException extends Exception
+class IPNotSetException extends \Exception
 {}
