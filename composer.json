@@ -1,16 +1,16 @@
 {
-    "name": "team-reflex/ebot-api",
+    "name": "lordmacu/ebot-api",
     "description": "An API to interact with the CS:GO match manager, eBot",
     "require": {
-        "illuminate/database": "5.1.* || 5.2.*",
-        "illuminate/events": "5.1.* || 5.2.*",
-        "illuminate/support": "5.1.* || 5.2.*",
+        "illuminate/database": "5.1.* || 5.4.*",
+        "illuminate/events": "5.1.* || 5.4.*",
+        "illuminate/support": "5.1.* || 5.4.*",
         "vlucas/phpdotenv": "^2.1@dev"
     },
     "authors": [
         {
-            "name": "David Cole",
-            "email": "david.cole@doesplay.com"
+            "name": "Cristian Garcia",
+            "email": "informacion@cristiangarcia.co"
         }
     ],
     "minimum-stability": "dev",
