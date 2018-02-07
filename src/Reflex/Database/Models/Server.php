@@ -17,4 +17,9 @@ class Server extends Model
 	{
 		return $this->hasMany(Match::class);
 	}
+
+	public function getServerByIp( $server_ip )
+	{
+		return $this->where('ip', $server_ip)->first()->id;
+	}
 }

@@ -132,12 +132,12 @@ class Match extends Model
         $team_a = ($team_a instanceof Team) ? $team_a->id : $team_a;
         $team_b = ($team_b instanceof Team) ? $team_b->id : $team_b;
 
-        $this->ip = null;
-        $this->server_id = null;
+        $this->ip = $settings['server_ip'];
+        $this->server_id = $settings['server_id'];
         $this->season_id = ($season instanceof Season) ? $season->id : $season;
-        $this->team_a = $team_a;
-        $this->team_b = $team_b;
-        $this->status = 0;
+        $this->team_a_name = $team_a;
+        $this->team_b_name = $team_b;
+        $this->status = $settings['status'];
         $this->max_round = $settings['max_round'];
         $this->rules = $settings['ruleset'];
         $this->overtime_startmoney = $settings['overtime']['start_money'];
@@ -146,6 +146,10 @@ class Match extends Model
         $this->config_ot = $settings['overtime']['enabled'];
         $this->config_streamer = $settings['wait_for_streamer'];
         $this->config_knife_round = $settings['knife_round'];
+        $this->auto_start = $settings['auto_start'];        
+        $this->auto_start_time = $settings['auto_start_time'];
+        $this->score_a = 0;
+        $this->score_b = 0; 
 
         if ($settings['password']['random']) {
             $this->config_password = str_random(15);
